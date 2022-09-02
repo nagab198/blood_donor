@@ -187,7 +187,7 @@
         <ul class="sidebar-nav" id="sidebar">
             <li><a href="home.php">Dashboard</a></li>
             <li><a href="register.php">Blood groups</a></li>
-            <li><a href="user.php ">user profile</a></li>
+            <li><a href="user_profile.php ">user profile</a></li>
             <li><a href="changepassword.html">changepassword</a></li>
             <li><a href="login.php">logout</a></li>
         </ul>
