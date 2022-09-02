@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+$name = $_SESSION['user_name'];
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +31,10 @@
         <ul class="nav navbar-nav" style="margin-left: 890px;">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#">my profile</a></li>
-            <li><a href="#">sign in</a></li>
-            <li><a href="#">login</a></li>
-            <li><a href="#">logout</a></li>
+            <li><a href="signup.php">Sign up</a></li>
+            <li><a href="login.php">login</a></li>
+            <li><a href="login.php"> <?php echo "Welcome".$name?></a></li>
+            <li><a href="logout.php">logout</a></li>
         </ul>
     </div>
 </nav>

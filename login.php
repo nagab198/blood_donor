@@ -1,5 +1,46 @@
 <?php
-include 'dashboard.php';
+include "admin/config.php";
+session_start();
+$u_name = null;
+$psw_error = null;
+
+if (isset($_POST['login'])) {
+
+    if ($_POST['uname'] && $_POST['uname'] != '') {
+        $u_name = $_POST['uname'];
+    } else {
+        $u_error = 'Please enter user name';
+    }
+    if ($_POST['psw'] && $_POST['psw'] != '') {
+        $psw = md5($_POST['psw']);
+    } else {
+        $psw_error = 'Please enter password';
+    }
+
+    if ($psw_error == null && $u_error == null) {
+        $sql = "SELECT * FROM `user` WHERE `email`='$u_name' AND `password` ='$psw'";
+        $result = mysqli_query($conn, $sql) or die(mysqli_error());
+        $rows = mysqli_num_rows($result);
+        if ($rows > 0) {
+            $response = mysqli_fetch_array($result);
+            $_SESSION['id'] = $response['id'];
+            $_SESSION['user_name'] = $response['user_name'];
+            $_SESSION['email'] = $response['email'];
+            $_SESSION['account_type'] = $response['account_type'];
+            if ($_SESSION['account_type'] == 'USER') {
+                header('location: index.php');
+            } else {
+                $msg = '<span class="text-danger">Your are not register user</span>';
+            }
+
+        } else {
+            $msg = '<span class="text-danger">Invalid credentials</span>';
+        }
+    }
+
+}
+
+
 ?>
 
 
@@ -18,16 +59,17 @@ include 'dashboard.php';
             height: 250px;
             padding: 16px;
         }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
         }
+
         form {
             border: 3px solid #f1f1f1;
         }
 
-        input[type=text], input[type=password]
-        {
-            width:90%;
+        input[type=text], input[type=password] {
+            width: 90%;
             padding: 12px 20px;
             margin: 8px 0;
             display: inline-block;
@@ -56,38 +98,39 @@ include 'dashboard.php';
         }
 
         span.psw {
-            float:left;
+            float: left;
             padding-top: 16px;
         }
 
-            .cancelbtn {
-                width:90%;
-            }
+        .cancelbtn {
+            width: 90%;
+        }
+
         }
     </style>
 </head>
 <body>
 <br><br><br>
 <div class="container">
-<h2>Login Form</h2>
+    <h2>Login Form</h2>
 
-<form action="#" method="post">
+    <form action="#" method="post">
 
-    <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
+        <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" id="uname" name="uname" required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
-        <button type="submit">Login</button>
-    </div>
+            <button type="submit" name="login" id="login" class="btn btn-primary">Login</button>
+        </div>
 
-    <div class="container">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="forgot.html">password?</a></span>
-    </div>
-</form>
+        <div class="container">
+            <button type="button" class="cancelbtn">Cancel</button>
+            <span class="psw">Forgot <a href="forgot.html">password?</a></span>
+        </div>
+    </form>
 </div>
 
 
