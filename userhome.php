@@ -26,9 +26,17 @@ $name = $_SESSION['user_name'];
             <li class="active"><a href="#">Home</a></li>
             <li><a href="user_profile.php">my profile</a></li>
             <li><a href="signup.php">Sign up</a></li>
-            <li><a href="login.php">login</a></li>
-            <li><a href="login.php"> <?php echo "Welcome ".$name?></a></li>
-            <li><a href="logout.php">logout</a></li>
+            <?php
+            if (isset($name) && $name != '') {
+                echo "<li><a>Welcome $name</a></li>
+                       <li><a href='logout.php'>logout</a></li>";
+
+            } else {
+                ?>
+                <li><a href="login.php">login</a></li>
+                <?php
+            }
+            ?>
         </ul>
     </div>
 </nav>
